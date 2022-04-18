@@ -6,6 +6,7 @@ var TableSchema = new Schema({
     desc: { type: String, required: true },
     image: {type: String},
     occupied: {type: Boolean, default: false},
+    numberOfSeats: { type: String, max: 100 },
     cafeId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'cafeUsers',

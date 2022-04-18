@@ -51,6 +51,9 @@ app.use('/product', require('./routes/product'));
 // creating a new menu category
 app.use('/productCat', require('./routes/productCategory'));
 
+// Tables
+app.use('/table', require('./routes/table'));
+
 //getting a authorized upload url of aws s3
 app.use('/upload-files', require('./routes/uploadFiles'));
 
