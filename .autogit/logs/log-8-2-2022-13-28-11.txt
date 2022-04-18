@@ -1,0 +1,23 @@
+-------------------- Auto-Git Log --------------------
+		Tue Mar 08 2022 13:28:11 GMT+0530 (India Standard Time)
+------------------------------------------------------
+
+Modified files:
+* app.js
+* controllers/admin.controller.js
+* controllers/product.js
+* controllers/upload.controller.js
+* middlewares/singleUploadMiddleware.js
+* routes/cafeAuth.js
+
+
+Created files:
+* .autogit/logs/log-8-2-2022-12-57-45.txt
+* public/photo-1646726224147.jpg
+* util/upload.js
+
+
+Deleted files:
+
+
+Renamed files:

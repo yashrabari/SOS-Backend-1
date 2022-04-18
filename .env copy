@@ -1,0 +1,6 @@
+MONGODB_URI = mongodb://localhost:27017/sos?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false
+
+AWS_S3_BUCKET = 'cdn.startofstories.com'
+AWS_S3_REGION = 'us-east-2'
+AWS_S3_ACCESS_KEY_ID = 'AKIASVN3OPLY2Y2LTN4T'
+AWS_S3_SECRETE_KEY_ID = 'di57nQfuVArE9rbsHeLX3J97X3ZRqXuO8PZsfoOp'
