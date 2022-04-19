@@ -226,14 +226,16 @@ exports.cafeuserLogin = (req, res) => {
                 id: cafeUser._id,
                 name: cafeUser.name,
                 email: cafeUser.email,
-                role: cafeUser.role
+                role: cafeUser.role,
+                cafeId:cafeUser.cafeId,
             }, config.secret, {
                 expiresIn: '30d'
             });
             return res.status(200).send({
                 success: true,
                 message: 'Login successful',
-                token: token
+                token: token,
+                user: cafeUser
             });
         });
     });

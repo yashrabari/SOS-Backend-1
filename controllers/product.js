@@ -22,7 +22,7 @@ exports.product_create = function (req, res) {
                 res.send(err);
             }
             res.json(product);
-            res.send('Product Created successfully');
+            // res.send('Product Created successfully');
         });
     } 
     else {
