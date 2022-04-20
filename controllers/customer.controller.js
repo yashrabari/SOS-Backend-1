@@ -29,7 +29,7 @@ exports.create_sosUser = function (req, res) {
         var mailRes = await sendMail({
             to: email,
             subject: "Welcome to SOS",
-            text: 'You vendor account successfully created',
+            text: 'Your SOS account successfully created',
             html: ` <h1>Welcome to SOS</h1>
                     <br>
                     <br>

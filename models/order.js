@@ -19,6 +19,11 @@ var OrderSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Cart',
     },
+    orderType: {
+        type: String,
+        max:100,
+        required: true
+    },
     orderStatus: {  type: Boolean, default: false   },
     sos: {  type: Boolean, default: false   },
     feedback: { type: String, max: 100}

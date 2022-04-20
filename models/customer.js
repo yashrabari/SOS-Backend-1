@@ -10,4 +10,4 @@ var CustomerSchema  = new Schema({
 
 
 // Export the model
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('NonSosCustomer', CustomerSchema);

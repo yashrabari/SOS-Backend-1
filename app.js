@@ -39,17 +39,20 @@ app.get('/', (req, res) => {
 app.use('/auth', require('./routes/auth'));
 
 
-//creating a new cafe route
+//Cafe 
 app.use('/temp-cafe', require('./routes/tempCafe'));
 
 // CafeUsers
 app.use('/cafe-user', require('./routes/cafeAuth'));
 
-// creating a new menu
+// Menu
 app.use('/product', require('./routes/product'));
 
-// creating a new menu category
+// Menu Category
 app.use('/productCat', require('./routes/productCategory'));
+
+// Customer
+app.use('/Customer', require('./routes/customer'));
 
 // Tables
 app.use('/table', require('./routes/table'));

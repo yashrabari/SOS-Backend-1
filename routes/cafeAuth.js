@@ -26,8 +26,11 @@ router.delete('/delete/:id', verifyUser,  Cafe_controller.delete_staff);
 
 
 // Order Routes
-router.post('/TakeOrder', Order_Controller.createOrder);
-router.post('/OrderDetails', Order_Controller.viewOrder);
+router.post('/TakeOrder', verifyUser, Order_Controller.createOrder);
+router.post('/OrderDetails', verifyUser, Order_Controller.viewOrder);
+
+// Cart Routes
+router.post('/CreatCart', verifyUser, Order_Controller.createCart);
 
 
 

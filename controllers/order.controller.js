@@ -1,4 +1,6 @@
 var Order = require('../models/order');
+var Cart = require('../models/cart');
+const decode = require('jsonwebtoken/decode');
 
 exports.createOrder = function(req, res){
     const {decoded} =  req;
@@ -9,7 +11,7 @@ exports.createOrder = function(req, res){
         cafeId: decoded.cafeId
     }
 
-    if(decoded.role === "cafeadmin" || decoded.role === "waiter")
+    if(decoded.role === "waiter")
     {
         var order = new Order(orderData);
         order.save((err, order) => {
@@ -30,4 +32,27 @@ exports.viewOrder = function(req, res, next) {
         if (err) return next(err);
         res.send(order);
     })
+}
+
+exports.createCart = function(req, res ,next){  
+    const {decoded} = req;
+    cartData = {
+        ...req.body,
+        addedBy:decode.id,
+        cafeId:decoded.cafeId
+    }
+    if(decoded.role === "waiter")
+    {
+        var cart = new Cart(cartData);
+        cart.save((err, cart) =>{
+                if(err){
+                    res.send(err);
+                }
+                res.send(cart)
+        })
+    }
+    else
+    {
+        res.send("you are not authorized to  create Cart...!")
+    }
 }
