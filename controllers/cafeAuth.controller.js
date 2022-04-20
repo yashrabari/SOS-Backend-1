@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const Admin = require('../models/admin');
 const config = require('../config/database');
 const CafeUsers = require('../models/cafeUsers');
 const { generatePassword } = require('../util/password');
@@ -65,14 +63,14 @@ exports.register = (req, res) =>{
 
     if(decoded.role === "cafeadmin"){
         
-        // var userpassword = generatePassword();
+        var userpassword = generatePassword();
         staffData = {
             ...req.body,
             addedBy: decoded.id,
             cafeId: decoded.cafeId,
-            // password:userpassword
-         
+            password:userpassword 
         }
+
         var staff = new CafeUsers(staffData);
         staff.save((err, staff) =>{
             if(err)
@@ -88,12 +86,50 @@ exports.register = (req, res) =>{
 }
 
 
+
+
+exports.getOneUser  = function(req, res, next) {
+
+    const { decoded } = req;
+
+    if(decoded.role === "cafeadmin" || decoded.role === "waiter")
+    {
+        CafeUsers.findById(req.params.id, function(err, user){
+            if (err) return next(err);
+            res.send(user);
+        });
+    }
+    else{
+        res.send('You Are Not Authorized to View This Data');
+    }
+};
+
+
+
+exports.updateUser = function (req, res) {
+    
+    const { decoded } = req;
+
+    if (decoded.role == 'cafeadmin')
+    { 
+        CafeUsers.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, user) {
+            if (err) return next(err);
+            res.send('Order udpated.');
+        });
+    }
+    else {
+        res.send('You are not authorized to add products!');
+    }   
+};
+
+
+
 exports.getAllUsers = (req, res) =>{
 
     const { decoded } = req;
     console.log(decoded);
 
-    if(decoded.role === "superadmin"){
+    if(decoded.role === "cafeadmin"){
 
         CafeUsers.find({} , (err, cafeUsers) =>{
 
@@ -109,9 +145,18 @@ exports.getAllUsers = (req, res) =>{
 };
 
 
-exports.delete_staff = function (req, res){
-    CafeUsers.findByIdAndRemove(req.params.id, function (err) {
-        if (err) return next(err);
-        res.send('Deleted successfully!');
-    })
+exports.deleteUser = function (req, res){
+
+    const { decoded } = req;
+
+    if(decoded.role === "cafeadmin")
+    {
+        CafeUsers.findByIdAndRemove(req.params.id, function (err) {
+            if (err) return next(err);
+            res.send('Deleted successfully!');
+        });
+    }
+    else {
+        res.send('You are not authorized to delete this data');
+    }
 };

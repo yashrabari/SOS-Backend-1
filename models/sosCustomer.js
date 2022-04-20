@@ -6,7 +6,8 @@ var SOSCustomerSchema  = new Schema({
     contact: { type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},
-    image: {type: String, max: 100}
+    image: {type: String, max: 100},
+    role: { type: String, default: 'customer'}
 });
 
 

@@ -52,7 +52,7 @@ app.use('/product', require('./routes/product'));
 app.use('/productCat', require('./routes/productCategory'));
 
 // Customer
-app.use('/Customer', require('./routes/customer'));
+app.use('/customer', require('./routes/customer'));
 
 // Tables
 app.use('/table', require('./routes/table'));

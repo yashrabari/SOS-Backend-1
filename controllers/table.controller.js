@@ -29,30 +29,65 @@ exports.table_create = function(req , res){
 
 
 exports.table_details = function (req, res, next) {
-    table.findById(req.params.id, function (err, tabel) {
-        if (err) return next(err);
-        res.send(table);
-    })
+    const { decoded } = req;
+
+    if(decoded.role == "cafeadmin" || decoded.role === 'waiter')
+    {
+        Table.findById(req.params.id, function (err, table) {
+            if (err) return next(err);
+            res.send(table);
+        })
+    }
+    else{
+        res.send('You Are Not an Authorized User!');
+    }
 };
 
 
 exports.tabel_all = function (req, res) {
-    table.find({ }, function (err, tabel) {
-        if (err) return next(err);
-        res.send(table);
-    })
+    
+    const { decoded } = req;
+
+    if(decoded.role == "cafeadmin" || decoded.role === 'waiter')
+    {
+        Table.find({ }, function (err, tabel) {
+            if (err) return next(err);
+            res.send(table);
+        })
+    }
+    else{
+        res.send('You Are Not an Authorized User!');
+    }
 };
 
 exports.table_update = function (req, res) {
-    table.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, table) {
-        if (err) return next(err);
-        res.send('table udpated.');
-    });
+    
+    const { decoded } = req;
+
+    if(decoded.role == "cafeadmin" || decoded.role === 'waiter')
+    {
+        Table.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, table) {
+            if (err) return next(err);
+            res.send('table udpated.');
+        });
+    }
+    else{
+    res.send('You Are Not an Authorized User!');
+    }
+
 };
 
 exports.table_delete = function (req, res) {
-    table.findByIdAndRemove(req.params.id, function (err) {
-        if (err) return next(err);
-        res.send('Deleted successfully!');
-    })
+    const { decoded } = req;
+
+    if(decoded.role == "cafeadmin")
+    {
+        Table.findByIdAndRemove(req.params.id, function (err) {
+            if (err) return next(err);
+            res.send('Deleted successfully!');
+        });
+    }
+    else{
+    res.send('You Are Not an Authorized User!');
+    }
 };

@@ -43,6 +43,25 @@ exports.create_sosUser = function (req, res) {
 };
 
 
+
+exports.getSosUser =  function(req, res, next) {
+
+    const { decoded } = req;
+
+    if(decoded.role === "superadmin" || decoded.role === 'customer')
+    {
+        Order.findById(req.params.id, function(err, order){
+            if (err) return next(err);
+            res.send(order);
+        });
+    }
+    else{
+        res.send('You are not authorized to take orders!');
+    }
+};
+
+
+
 exports.create_user = function (req, res) {
 
     const {decoded} = req;

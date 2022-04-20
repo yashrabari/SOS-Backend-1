@@ -7,5 +7,7 @@ var Customer_controller = require('../controllers/customer.controller');
 
 router.post('/Register', Customer_controller.create_sosUser);
 
+router.get('/:id', Customer_controller.getSosUser);
+
 
 module.exports = router;    

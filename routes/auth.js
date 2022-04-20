@@ -9,6 +9,7 @@ const auth_controller = require('../controllers/auth.controller');
 //admin authentication route
 router.post('/admin/register', auth_controller.adminRegister);
 router.post('/admin/login', auth_controller.adminLogin);
+router.get('/admin/getUsers', verifyUser, auth_controller.fetchUsers);
 
 
 

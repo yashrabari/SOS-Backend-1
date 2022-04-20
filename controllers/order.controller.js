@@ -1,9 +1,7 @@
 var Order = require('../models/order');
-var Cart = require('../models/cart');
-const decode = require('jsonwebtoken/decode');
 
 exports.createOrder = function(req, res){
-    const {decoded} =  req;
+    const { decoded } =  req;
 
     var orderData = {
         ...req.body,
@@ -11,7 +9,7 @@ exports.createOrder = function(req, res){
         cafeId: decoded.cafeId
     }
 
-    if(decoded.role === "waiter")
+    if(decoded.role === "cafeadmin" || decoded.role === "waiter")
     {
         var order = new Order(orderData);
         order.save((err, order) => {
@@ -27,32 +25,58 @@ exports.createOrder = function(req, res){
 };
 
 
-exports.viewOrder = function(req, res, next) {
-    Order.findById(req.params.id, function(err, order){
-        if (err) return next(err);
-        res.send(order);
-    })
-}
 
-exports.createCart = function(req, res ,next){  
-    const {decoded} = req;
-    cartData = {
-        ...req.body,
-        addedBy:decode.id,
-        cafeId:decoded.cafeId
-    }
-    if(decoded.role === "waiter")
+exports.viewOrder = function(req, res, next) {
+
+    const { decoded } = req;
+
+    if(decoded.role === "cafeadmin" || decoded.role === "waiter")
     {
-        var cart = new Cart(cartData);
-        cart.save((err, cart) =>{
-                if(err){
-                    res.send(err);
-                }
-                res.send(cart)
-        })
+        Order.findById(req.params.id, function(err, order){
+            if (err) return next(err);
+            res.send(order);
+        });
     }
-    else
+    else{
+        res.send('You are not authorized to take orders!');
+    }
+};
+
+
+
+exports.upadteOrder = function (req, res) {
+    
+    const { decoded } = req;
+
+    if (decoded.role == 'cafeadmin' || decoded.role == 'waiter')
+    { 
+        Order.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, order) {
+            if (err) return next(err);
+            res.send('Order udpated.');
+        });
+    }
+    else {
+        res.send('You are not authorized to add products!');
+    }   
+};
+
+
+
+exports.deleteOrder = function (req, res) {
+    const { decoded } = req;
+
+    if (decoded.role == 'cafeadmin')
     {
-        res.send("you are not authorized to  create Cart...!")
+        Order.findByIdAndRemove(req.params.id, function (err) {
+            if (err) return next(err);
+            res.send('Deleted successfully!');
+        });
     }
-}
+    else {
+        res.send('You are not authorized to add products!');
+    }  
+};
+
+
+
+

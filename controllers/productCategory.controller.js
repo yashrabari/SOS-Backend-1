@@ -31,36 +31,73 @@ exports.productCategory_create = function (req, res) {
 };
 
 exports.productCategory_details = function (req, res) {
-    productCategory.findById(req.params.id, function (err, productCat) {
-        if (err) return next(err);
-        res.send(productCat);
-    })
+   
+    const { decoded } = req;
+   
+    if (decoded.role == 'cafeadmin' || decoded.role == 'waiter') 
+    {
+        productCategory.findById(req.params.id, function (err, productCat) {
+            if (err) return next(err);
+            res.send(productCat);
+        });
+    } 
+    else {
+        res.send('You are not authorized to add product Category');
+    }
 };
+
+
+
+
 exports.productCategory_All = function (req, res) {
-    productCategory.find({ }, function (err, productCat) {
-        if (err) return next(err);
-        res.send(productCat);
-    })
+    const { decoded } = req;
+   
+    if (decoded.role == 'cafeadmin' || decoded.role === 'waiter') 
+    {        
+        productCategory.find({ }, function (err, productCat) {
+            if (err) return next(err);
+            res.send(productCat);
+        });
+    } 
+    else {
+        res.send('You are not authorized to add product Category');
+    }
 };
 
 
-exports.productCategory_details = function (req, res) {
-    productCategory.findById(req.params.id, function (err, productCat) {
-        if (err) return next(err);
-        res.send(productCat);
-    })
-};
+
 
 exports.productCategory_update = function (req, res) {
-    productCategory.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, productCat) {
-        if (err) return next(err);
-        res.send('Product Category udpated.');
-    });
+
+    const { decoded } = req;
+   
+    if (decoded.role == 'cafeadmin') 
+    {
+        productCategory.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, productCat) {
+            if (err) return next(err);
+            res.send('Product Category udpated.');
+        });
+    } 
+    else {
+        res.send('You are not authorized to add product Category');
+    }
 };
 
+
+
+
 exports.productCategory_delete = function (req, res) {
-    productCategory.findByIdAndRemove(req.params.id, function (err) {
-        if (err) return next(err);
-        res.send('Deleted successfully!');
-    })
+    
+    const { decoded } = req;
+   
+    if (decoded.role == 'cafeadmin') 
+    {
+        productCategory.findByIdAndRemove(req.params.id, function (err) {
+            if (err) return next(err);
+            res.send('Deleted successfully!');
+        })
+    } 
+    else {
+        res.send('You are not authorized to add product Category');
+    }
 };

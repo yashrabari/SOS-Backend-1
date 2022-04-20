@@ -6,7 +6,7 @@ const Onboarder = require('../models/onboarders');
 const { sendMail } = require('../util/mailSMTP');
 const { generatePassword } = require('../util/password');
 const CafeUsers = require('../models/cafeUsers');
-
+const SOSCustomer = require('../models/sosCustomer');
 
 
 
@@ -239,4 +239,30 @@ exports.cafeuserLogin = (req, res) => {
             });
         });
     });
+}
+
+exports.fetchUsers = function (req, res){
+    
+    const {decoded} = req;
+
+    if(decoded.role === "superadmin")
+    {
+        SOSCustomer.find({ }, (err, customer) => {
+
+            if (err) {
+                return res.status(500).send({
+                    success: false,
+                    message: 'Error in finding cafeUser'
+                });
+            }
+            if (!customer) {
+                return res.status(401).send({
+                    success: false,
+                    message: 'No cafeUser found with this email'
+                });
+            }
+
+           return res.send(customer);
+        })
+    }
 }
