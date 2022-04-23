@@ -44,7 +44,7 @@ exports.viewOrder = function(req, res, next) {
 
 
 
-exports.upadteOrder = function (req, res) {
+exports.updateOrder = function (req, res) {
     
     const { decoded } = req;
 
